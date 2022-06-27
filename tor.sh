@@ -51,9 +51,8 @@ chmod 644 /etc/tor/torrc
 iptables -F
 iptables -t nat -F
 
-# set iptables nat
 iptables -t nat -A OUTPUT -m owner --uid-owner $TOR_UID -j RETURN
-# set dns redirect
+
 iptables -t nat -A OUTPUT -p udp --dport 53 -j REDIRECT --to-ports $TOR_DNS
 iptables -t nat -A OUTPUT -p tcp --dport 53 -j REDIRECT --to-ports $TOR_DNS
 iptables -t nat -A OUTPUT -p udp -m owner --uid-owner $TOR_UID -m udp --dport 53 -j REDIRECT --to-ports $TOR_DNS
